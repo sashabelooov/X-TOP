@@ -1,0 +1,1 @@
+X-TOP AI - bu savdo do'konlaridagi "muzlab qolgan" (sotilmay) tovarlarni sun'iy intellekt yordamida aniqlaydigan va ularni turgan tez aylanma mablag'ga aylantirib, aqlli savdo ekotizimi. Sodda qilib: Tadbirkor uchun - aqlli tahlilchi, xaridor uchun - eng manfaatli chegirmalar markazi.
