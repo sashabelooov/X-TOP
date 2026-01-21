@@ -1,163 +1,139 @@
-# from fastapi import FastAPI
-# version = "v1"
-# description = """
-# X-TOP AI - bu savdo do'konlaridagi "muzlab qolgan" 
-# (sotilmay) tovarlarni sun'iy intellekt yordamida 
-# aniqlaydigan va ularni turgan tez aylanma mablag'ga aylantirib, 
-# aqlli savdo ekotizimi. Sodda qilib: Tadbirkor uchun - aqlli tahlilchi, 
-# xaridor uchun - eng manfaatli chegirmalar markazi.
-# """
-# app = FastAPI(
-#     title="X-TOP AI",
-#     description=description,
-#     version=version,
-# )
-
-
-
-import os
-from datetime import datetime, timedelta
+import jwt
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-from authlib.integrations.starlette_client import OAuth
-from dotenv import load_dotenv
-from fastapi import FastAPI, Request, Depends, HTTPException, Cookie
-from fastapi.responses import HTMLResponse, RedirectResponse
-from jose import JWTError, jwt
+import httpx
+from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi.responses import RedirectResponse
+from pydantic import BaseModel, EmailStr
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy import Column, Integer, String, select
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from sqlalchemy.orm import declarative_base
-from starlette.middleware.sessions import SessionMiddleware
-
-load_dotenv()
-
-# Config
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
-# DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:password@localhost/oauth_db")
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///./test.db")
-SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key")
-ALGORITHM = "HS256"
-SESSION_SECRET = "session-secret"
-
-oauth = OAuth()
-oauth.register(
-    name="google",
-    client_id=GOOGLE_CLIENT_ID,
-    client_secret=GOOGLE_CLIENT_SECRET,
-    server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
-    client_kwargs={"scope": "openid email profile"},
-)
+from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
+from sqlalchemy.orm import declarative_base, sessionmaker
+from contextlib import asynccontextmanager
+from decouple import config
 
 
+# --- 1. CONFIGURATION ---
+class Settings(BaseSettings):
+    # Database
+    DATABASE_URL: str = config("DATABASE_URL") # type: ignore
+    
+    # Google OAuth
+    GOOGLE_CLIENT_ID: str
+    GOOGLE_CLIENT_SECRET: str
+    GOOGLE_REDIRECT_URI: str = "http://localhost:8000/auth/callback"
+    
+    # JWT Security
+    SECRET_KEY: str = "07399ed7469b15c0e8367991d6a6c7dc3593ee7e93f5434f73b2a1a45aa695c4"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
-engine = create_async_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
-)
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
+settings = Settings() # type: ignore # type: ignore
 
-AsyncSessionLocal = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+# --- 2. DATABASE SETUP ---
+engine = create_async_engine(settings.DATABASE_URL, echo=False)
+AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False) # type: ignore
 Base = declarative_base()
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True)
-    google_id = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
+    email = Column(String, unique=True, index=True, nullable=False)
     name = Column(String)
-    picture = Column(String)
-
-async def create_tables():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-app = FastAPI()
-app.add_middleware(SessionMiddleware, secret_key=SESSION_SECRET)
-
-@app.on_event("startup")
-async def startup():
-    await create_tables()
-
-def create_access_token(data: dict, expires_delta: timedelta = timedelta(hours=24)):
-    to_encode = data.copy()
-    expire = datetime.utcnow() + expires_delta
-    to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 async def get_db():
-    async with AsyncSessionLocal() as session:
+    async with AsyncSessionLocal() as session: # type: ignore
         yield session
 
-async def get_current_user(access_token: Optional[str] = Cookie(None), db: AsyncSession = Depends(get_db)):
-    if not access_token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    try:
-        payload = jwt.decode(access_token, SECRET_KEY, algorithms=[ALGORITHM])
-        email: str = payload.get("sub") # type: ignore
-        if not email:
-            raise HTTPException(status_code=401)
-    except JWTError:
-        raise HTTPException(status_code=401)
-    result = await db.execute(select(User).where(User.email == email))
-    user = result.scalars().first()
-    if not user:
-        raise HTTPException(status_code=401)
-    return user
+# --- 3. SECURITY UTILS ---
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    expire = datetime.now(timezone.utc) + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
-@app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    return """
-    <h1>FastAPI Google OAuth</h1>
-    <a href="/login/google">Login with Google</a><br><br>
-    <a href="/me">Profile (protected)</a><br><br>
-    <a href="/logout">Logout</a>
-    """
+# --- 4. APP LIFESPAN ---
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with engine.begin() as conn:
+        # Automatically creates tables in Postgres on startup
+        await conn.run_sync(Base.metadata.create_all)
+    yield
 
-@app.get("/login/google")
-async def login_google(request: Request):
-    redirect_uri = request.url_for("auth_google")
-    return await oauth.google.authorize_redirect(request, redirect_uri) # type: ignore
+app = FastAPI(lifespan=lifespan)
 
-@app.get("/auth/google")
-async def auth_google(request: Request, db: AsyncSession = Depends(get_db)):
-    token = await oauth.google.authorize_access_token(request) # type: ignore
-    user_info = token.get("userinfo")
-    if not user_info:
-        raise HTTPException(400, "Failed to get user info")
+# --- 5. ROUTES ---
 
-    google_id = user_info["sub"]
-    email = user_info["email"]
+@app.get("/auth/login/google")
+async def login_google():
+    """Step 1: Redirect user to Google"""
+    google_url = (
+        "https://accounts.google.com/o/oauth2/v2/auth?"
+        f"client_id={settings.GOOGLE_CLIENT_ID}&"
+        f"redirect_uri={settings.GOOGLE_REDIRECT_URI}&"
+        "response_type=code&"
+        "scope=openid%20email%20profile&"
+        "access_type=offline"
+    )
+    return RedirectResponse(url=google_url)
+
+@app.get("/auth/callback")
+async def auth_callback(code: str, db: AsyncSession = Depends(get_db)):
+    """Step 2: Google sends the user back with a 'code'"""
+    
+    # A. Exchange code for Access Token
+    async with httpx.AsyncClient() as client:
+        token_res = await client.post(
+            "https://oauth2.googleapis.com/token",
+            data={
+                "code": code,
+                "client_id": settings.GOOGLE_CLIENT_ID,
+                "client_secret": settings.GOOGLE_CLIENT_SECRET,
+                "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+                "grant_type": "authorization_code",
+            }
+        )
+        token_data = token_res.json()
+        if "error" in token_data:
+            raise HTTPException(status_code=400, detail=token_data.get("error_description"))
+        
+        access_token = token_data.get("access_token")
+
+        # B. Get User Info from Google
+        user_info_res = await client.get(
+            "https://www.googleapis.com/oauth2/v3/userinfo",
+            headers={"Authorization": f"Bearer {access_token}"}
+        )
+        user_info = user_info_res.json()
+
+    # C. Database Logic (Upsert)
+    email = user_info.get("email")
     name = user_info.get("name")
-    picture = user_info.get("picture")
 
-    result = await db.execute(select(User).where(User.google_id == google_id))
-    user = result.scalars().first()
+    query = select(User).where(User.email == email)
+    result = await db.execute(query)
+    user = result.scalar_one_or_none()
+
     if not user:
-        result = await db.execute(select(User).where(User.email == email))
-        user = result.scalars().first()
-        if not user:
-            user = User(google_id=google_id, email=email, name=name, picture=picture)
-            db.add(user)
-            await db.commit()
-            await db.refresh(user)
-        else:
-            user.google_id = google_id
-            user.name = name
-            user.picture = picture
-            await db.commit()
+        user = User(email=email, name=name)
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
 
-    access_token = create_access_token({"sub": email})
-    response = RedirectResponse(url="/")
-    response.set_cookie("access_token", access_token, httponly=True, max_age=86400, samesite="lax")
-    return response
+    # D. Issue our own App's JWT
+    token = create_access_token(data={"sub": user.email})
+    
+    return {
+        "access_token": token,
+        "token_type": "bearer",
+        "user": {"id": user.id, "email": user.email, "name": user.name}
+    }
 
-@app.get("/me")
-async def me(current_user: User = Depends(get_current_user)):
-    return {"email": current_user.email, "name": current_user.name, "picture": current_user.picture}
-
-@app.get("/logout")
-async def logout():
-    response = RedirectResponse(url="/")
-    response.delete_cookie("access_token")
-    return response
+@app.get("/users")
+async def list_users(db: AsyncSession = Depends(get_db)):
+    """Check registered users"""
+    result = await db.execute(select(User))
+    return result.scalars().all()
