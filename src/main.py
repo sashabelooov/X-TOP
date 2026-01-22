@@ -25,11 +25,6 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_SECRET: str
     GOOGLE_REDIRECT_URI: str = "http://localhost:8000/auth/callback"
     
-    # Facebook
-    FACEBOOK_CLIENT_ID: str = config("FACEBOOK_CLIENT_ID", default="") # type: ignore
-    FACEBOOK_CLIENT_SECRET: str = config("FACEBOOK_CLIENT_SECRET", default="") # type: ignore
-    FACEBOOK_REDIRECT_URI: str = "http://localhost:8000/auth/callback/facebook"
-
     SECRET_KEY: str = "07399ed7469b15c0e8367991d6a6c7dc3593ee7e93f5434f73b2a1a45aa695c4"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
@@ -142,16 +137,3 @@ async def list_users(db: AsyncSession = Depends(get_db)):
     """Check registered users"""
     result = await db.execute(select(User))
     return result.scalars().all()
-
-
-
-@app.get("/auth/login/facebook")
-async def login_facebook():
-    """Step 1: Redirect user to Facebook"""
-    fb_url = (
-        f"https://www.facebook.com/v18.0/dialog/oauth?"
-        f"client_id={settings.FACEBOOK_CLIENT_ID}&"
-        f"redirect_uri={settings.FACEBOOK_REDIRECT_URI}&"
-        f"scope=email,public_profile"
-    )
-    return RedirectResponse(url=fb_url)
