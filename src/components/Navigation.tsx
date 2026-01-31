@@ -1,19 +1,96 @@
-import { Search, Heart, ShoppingCart, User, LayoutGrid } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Search,
+  Heart,
+  ShoppingCart,
+  User,
+  LayoutGrid,
+  Smartphone,
+  Laptop,
+  Tv,
+  Headphones,
+  Watch,
+  Camera,
+  Gamepad2,
+  Shirt,
+  Home,
+  Dumbbell,
+  Baby,
+  Sparkles,
+} from 'lucide-react';
 import './Navigation.css';
 
+interface Category {
+  name: string;
+  slug: string;
+  icon: React.ReactNode;
+}
+
+const categories: Category[] = [
+  { name: 'Elektronika', slug: 'elektronika', icon: <Laptop size={20} /> },
+  { name: 'Smartfonlar', slug: 'smartfonlar', icon: <Smartphone size={20} /> },
+  { name: 'TV va Audio', slug: 'tv-audio', icon: <Tv size={20} /> },
+  { name: 'Quloqchinlar', slug: 'quloqchinlar', icon: <Headphones size={20} /> },
+  { name: 'Soatlar', slug: 'soatlar', icon: <Watch size={20} /> },
+  { name: 'Kameralar', slug: 'kameralar', icon: <Camera size={20} /> },
+  { name: "O'yinlar", slug: 'oyinlar', icon: <Gamepad2 size={20} /> },
+  { name: 'Kiyimlar', slug: 'kiyimlar', icon: <Shirt size={20} /> },
+  { name: 'Uy-ro\'zg\'or', slug: 'uy-rozgor', icon: <Home size={20} /> },
+  { name: 'Sport', slug: 'sport', icon: <Dumbbell size={20} /> },
+  { name: 'Bolalar uchun', slug: 'bolalar-uchun', icon: <Baby size={20} /> },
+  { name: 'Aksessuarlar', slug: 'aksessuarlar', icon: <Sparkles size={20} /> },
+];
+
 const Navigation = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <nav className="navigation">
       <div className="nav-container">
         <div className="nav-left">
-          <a href="/" className="logo">
+          <Link to="/" className="logo">
             <span className="logo-x">X</span>
             <span className="logo-top">top</span>
-          </a>
-          <button className="catalog-btn">
-            <LayoutGrid size={20} />
-            <span>Katalog</span>
-          </button>
+          </Link>
+          <div className="catalog-wrapper" ref={dropdownRef}>
+            <button
+              className={`catalog-btn ${isDropdownOpen ? 'active' : ''}`}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              <LayoutGrid size={20} />
+              <span>Katalog</span>
+            </button>
+            {isDropdownOpen && (
+              <div className="catalog-dropdown">
+                <div className="catalog-dropdown-grid">
+                  {categories.map((category) => (
+                    <Link
+                      key={category.slug}
+                      to={`/category/${category.slug}`}
+                      className="catalog-dropdown-item"
+                      onClick={() => setIsDropdownOpen(false)}
+                    >
+                      <span className="catalog-dropdown-icon">{category.icon}</span>
+                      <span className="catalog-dropdown-name">{category.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="search-container">

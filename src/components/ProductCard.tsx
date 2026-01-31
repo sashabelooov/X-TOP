@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Heart, Clock, Star } from 'lucide-react';
 import './ProductCard.css';
 
@@ -18,6 +19,7 @@ export interface ProductCardProps {
 }
 
 const ProductCard = ({
+  id,
   name,
   price,
   originalPrice,
@@ -34,11 +36,17 @@ const ProductCard = ({
   };
 
   return (
-    <div className={`product-card ${variant}`}>
+    <Link to={`/product/${id}`} className={`product-card ${variant}`}>
       <div className="product-image-container">
         {discount && <span className="product-badge discount">-{discount}%</span>}
         <img src={image} alt={name} className="product-image" />
-        <button className="wishlist-btn">
+        <button
+          className="wishlist-btn"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
           <Heart size={18} />
         </button>
         {timerHours && (
@@ -68,7 +76,7 @@ const ProductCard = ({
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 

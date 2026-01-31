@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRef } from 'react';
 import './CategorySection.css';
@@ -7,12 +8,20 @@ export interface CategoryItem {
   name: string;
   image: string;
   count: number;
+  slug?: string;
 }
 
 interface CategorySectionProps {
   title: string;
   categories: CategoryItem[];
 }
+
+const generateSlug = (name: string): string => {
+  return name
+    .toLowerCase()
+    .replace(/'/g, '')
+    .replace(/\s+/g, '-');
+};
 
 const CategorySection = ({ title, categories }: CategorySectionProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -44,7 +53,11 @@ const CategorySection = ({ title, categories }: CategorySectionProps) => {
         <div className="categories-scroll" ref={scrollRef}>
           <div className="categories-row">
             {categories.map((category) => (
-              <a href="#" key={category.id} className="category-card">
+              <Link
+                to={`/category/${category.slug || generateSlug(category.name)}`}
+                key={category.id}
+                className="category-card"
+              >
                 <div className="category-image-wrapper">
                   <span className="category-count">{category.count}</span>
                   <div className="category-image-circle">
@@ -52,7 +65,7 @@ const CategorySection = ({ title, categories }: CategorySectionProps) => {
                   </div>
                 </div>
                 <span className="category-name">{category.name}</span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

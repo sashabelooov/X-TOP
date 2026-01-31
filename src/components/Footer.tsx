@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { MapPin, Headphones, Mail, Clock, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import './Footer.css';
 
@@ -6,10 +7,10 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section footer-brand">
-          <a href="/" className="footer-logo">
+          <Link to="/" className="footer-logo">
             <span className="footer-logo-x">X</span>
             <span className="footer-logo-top">top</span>
-          </a>
+          </Link>
           <ul className="footer-contact-list">
             <li>
               <MapPin size={16} />
@@ -44,7 +45,7 @@ const Footer = () => {
             <li><a href="#">Login / Register</a></li>
             <li><a href="#">Cart</a></li>
             <li><a href="#">Wishlist</a></li>
-            <li><a href="#">Shop</a></li>
+            <li><Link to="/category">Shop</Link></li>
           </ul>
         </div>
 
