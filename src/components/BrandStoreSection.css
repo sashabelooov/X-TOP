@@ -1,0 +1,160 @@
+.brand-store-section {
+  padding: 40px 0;
+  background-color: #ffffff;
+}
+
+.brand-store-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.brand-store-section .section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.brand-store-content {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  background-color: #f9fafb;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.brand-store-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brand-banner {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  border-radius: 12px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.brand-banner-content {
+  position: relative;
+  z-index: 2;
+}
+
+.banner-title {
+  color: #fbbf24;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.banner-subtitle {
+  color: #9ca3af;
+  font-size: 12px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.banner-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.banner-btn:hover {
+  transform: scale(1.05);
+}
+
+.brand-banner-image {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 60%;
+  z-index: 1;
+}
+
+.brand-banner-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.brand-categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.brand-category-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #374151;
+  text-decoration: none;
+  font-size: 13px;
+  padding: 6px 0;
+  transition: color 0.2s;
+}
+
+.brand-category-link:hover {
+  color: #7c3aed;
+}
+
+.brand-category-link svg {
+  color: #9ca3af;
+}
+
+.brand-store-products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.brand-store-products .product-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+@media (max-width: 1024px) {
+  .brand-store-content {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-store-left {
+    flex-direction: row;
+  }
+
+  .brand-banner {
+    flex: 1;
+  }
+
+  .brand-categories {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-store-left {
+    flex-direction: column;
+  }
+
+  .brand-store-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-store-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

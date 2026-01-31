@@ -1,0 +1,217 @@
+.hero {
+  padding: 24px 0;
+  background-color: #f9fafb;
+}
+
+.hero-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 20px;
+}
+
+.hero-main {
+  position: relative;
+}
+
+.hero-banner {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+  border-radius: 16px;
+  padding: 40px;
+  min-height: 450px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title {
+  color: #ffffff;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.hero-btn {
+  background-color: #d4a574;
+  color: #1e1b4b;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.hero-btn:hover {
+  background-color: #c9956a;
+}
+
+.hero-logo {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 2;
+}
+
+.hero-logo-x {
+  color: #a78bfa;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.hero-logo-top {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.hero-image {
+  position: absolute;
+  right: 20px;
+  bottom: 60px;
+  z-index: 1;
+}
+
+.ps5-image {
+  max-width: 350px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
+}
+
+.hero-shop-btn {
+  background-color: #d4a574;
+  color: #1e1b4b;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  align-self: center;
+  transition: background-color 0.2s;
+}
+
+.hero-shop-btn:hover {
+  background-color: #c9956a;
+}
+
+.hero-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sidebar-card {
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+}
+
+.women-collection {
+  background: linear-gradient(135deg, #fdf4ff 0%, #f5d0fe 100%);
+  flex: 1;
+}
+
+.sidebar-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.speakers {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+}
+
+.speakers .card-title,
+.speakers .card-description {
+  color: #ffffff;
+}
+
+.perfume {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.card-content {
+  flex: 1;
+  z-index: 2;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.card-description {
+  font-size: 13px;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.card-image {
+  position: relative;
+  z-index: 1;
+}
+
+.card-image img {
+  max-width: 150px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.card-image.small img {
+  max-width: 80px;
+}
+
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-sidebar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .sidebar-bottom {
+    display: contents;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .ps5-image {
+    max-width: 250px;
+  }
+}

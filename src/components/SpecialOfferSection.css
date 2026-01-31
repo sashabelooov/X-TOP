@@ -1,0 +1,171 @@
+.special-offer-section {
+  padding: 40px 0;
+  background-color: #ffffff;
+}
+
+.special-offer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.special-offer-section .section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.special-offer-content {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+  background-color: #f9fafb;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.special-offer-products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.special-offer-products .product-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+}
+
+.phone-promo-banner {
+  background: linear-gradient(160deg, #2d2d2d 0%, #1a1a1a 100%);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-promo-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.social-icons {
+  display: flex;
+  gap: 8px;
+  color: #9ca3af;
+}
+
+.social-handle {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.phone-promo-content {
+  position: relative;
+  z-index: 2;
+}
+
+.premium-label {
+  color: #9ca3af;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.phone-name {
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 8px 0 12px;
+}
+
+.phone-specs {
+  color: #9ca3af;
+  font-size: 11px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.phone-price-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-bottom: 16px;
+}
+
+.price-label {
+  color: #ef4444;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.price-value {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.preorder-text {
+  color: #9ca3af;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.preorder-date {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.phone-promo-image {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 60%;
+  z-index: 1;
+}
+
+.phone-promo-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+}
+
+@media (max-width: 1024px) {
+  .special-offer-content {
+    grid-template-columns: 1fr;
+  }
+
+  .phone-promo-banner {
+    min-height: 300px;
+  }
+
+  .phone-promo-image {
+    width: 40%;
+  }
+}
+
+@media (max-width: 768px) {
+  .special-offer-products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .phone-promo-image {
+    width: 50%;
+    right: -10px;
+    bottom: -10px;
+  }
+
+  .phone-name {
+    font-size: 24px;
+  }
+}
