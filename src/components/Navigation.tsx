@@ -111,10 +111,10 @@ const Navigation = () => {
           <button className="nav-action-btn">
             <ShoppingCart size={24} />
           </button>
-          <button className="nav-action-btn login-btn">
+          <Link to="/login" className="nav-action-btn login-btn">
             <User size={20} />
             <span>Kirish</span>
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

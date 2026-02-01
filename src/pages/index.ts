@@ -1,3 +1,7 @@
 export { default as HomePage } from './HomePage';
 export { default as CategoryPage } from './CategoryPage';
 export { default as ProductDetailPage } from './ProductDetailPage';
+export { default as LoginPage } from './LoginPage';
+export { default as RegisterPage } from './RegisterPage';
+export { default as ForgotPasswordPage } from './ForgotPasswordPage';
+export { default as ResetPasswordPage } from './ResetPasswordPage';
