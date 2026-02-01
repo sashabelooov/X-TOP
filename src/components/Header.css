@@ -63,3 +63,33 @@
 .header-callback:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 20px;
+  }
+
+  .header-nav {
+    display: none; /* Hide top nav links on mobile to save space */
+  }
+
+  .header-info {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .header-time, .header-phone, .header-callback {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-info {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
