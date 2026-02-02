@@ -163,15 +163,30 @@
     border: 1px solid #e5e7eb;
     background-color: #ffffff;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     padding: 0;
+    overflow: hidden;
+    /* Ensures images stay within circle */
+    flex-shrink: 0;
 }
 
 .social-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Google - Keeps defaults (white bg, border) */
+.social-btn.google:hover {
     background-color: #f9fafb;
     border-color: #d1d5db;
-    transform: translateY(-2px);
 }
+
+/* Brand Image Buttons (Facebook & Instagram) */
+/* Brand Image Buttons (Facebook & Instagram) */
+/* Now using default .social-btn styles */
+
+/* Instagram specific: Clip the squircle to a circle if needed, or just let overflow:hidden handle it */
+/* The overflow:hidden on .social-btn will ensure the squircle image is cropped to a perfect circle */
 
 .social-icon {
     width: 24px;
