@@ -46,7 +46,7 @@ const BrandStoreSection = ({
             </div>
           </div>
           <div className="brand-store-products">
-            {products.slice(0, 8).map((product) => (
+            {products.slice(0, 10).map((product) => (
               <ProductCard key={product.id} {...product} variant="compact" />
             ))}
           </div>
