@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import MainLayout from './components/MainLayout';
-import { HomePage, CategoryPage, ProductDetailPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage } from './pages';
+import { HomePage, CategoryPage, ProductDetailPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, PaymentPage, AboutPage } from './pages';
 import './App.css';
 
 function App() {
@@ -13,6 +13,8 @@ function App() {
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/category/:slug" element={<CategoryPage />} />
           <Route path="/product/:id" element={<ProductDetailPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Route>
 
         {/* Auth Routes without Header/Footer */}
