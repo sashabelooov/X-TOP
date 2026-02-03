@@ -27,21 +27,21 @@ const ProductSection = ({ title, products }: ProductSectionProps) => {
       <div className="product-section-container">
         <div className="section-header">
           <h2 className="section-title">{title}</h2>
-          <div className="section-nav">
-            <button className="nav-arrow" onClick={() => scroll('left')}>
-              <ChevronLeft size={20} />
-            </button>
-            <button className="nav-arrow" onClick={() => scroll('right')}>
-              <ChevronRight size={20} />
-            </button>
-          </div>
         </div>
-        <div className="products-scroll" ref={scrollRef}>
-          <div className="products-row">
-            {products.map((product) => (
-              <ProductCard key={product.id} {...product} />
-            ))}
+        <div className="products-scroll-wrapper">
+          <button className="nav-arrow nav-arrow-left" onClick={() => scroll('left')}>
+            <ChevronLeft size={20} />
+          </button>
+          <div className="products-scroll" ref={scrollRef}>
+            <div className="products-row">
+              {products.map((product) => (
+                <ProductCard key={product.id} {...product} />
+              ))}
+            </div>
           </div>
+          <button className="nav-arrow nav-arrow-right" onClick={() => scroll('right')}>
+            <ChevronRight size={20} />
+          </button>
         </div>
       </div>
     </section>

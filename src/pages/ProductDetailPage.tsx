@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import {
   ChevronRight,
   ChevronLeft,
-  Star,
+  Eye,
   Minus,
   Plus,
-  ShoppingCart,
+  ExternalLink,
   Heart,
   Clock,
 } from 'lucide-react';
@@ -20,9 +20,9 @@ interface Product {
   image: string;
   discount?: number;
   storeName?: string;
-  rating?: number;
-  reviewCount?: number;
+  viewCount?: number;
   timerHours?: number;
+  marketplaceName?: string;
 }
 
 interface ColorOption {
@@ -54,8 +54,7 @@ const similarProducts: Product[] = [
     image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -66,8 +65,7 @@ const similarProducts: Product[] = [
     image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Apple',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -78,8 +76,7 @@ const similarProducts: Product[] = [
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -90,8 +87,7 @@ const similarProducts: Product[] = [
     image: 'https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -102,8 +98,7 @@ const similarProducts: Product[] = [
     image: 'https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -114,8 +109,7 @@ const similarProducts: Product[] = [
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
 ];
@@ -242,10 +236,9 @@ const ProductDetailPage = () => {
           <div className="product-info">
             <h1 className="product-title">Havic HV G-92 Gamepad</h1>
 
-            <div className="product-rating">
-              <Star size={16} fill="#f59e0b" color="#f59e0b" />
-              <span className="rating-value">4.7</span>
-              <span className="rating-count">(1448 sharhlar)</span>
+            <div className="product-views">
+              <Eye size={16} color="#6b7280" />
+              <span className="view-count">1448 ko'rilgan</span>
             </div>
 
             <div className="product-price-row">
@@ -315,9 +308,9 @@ const ProductDetailPage = () => {
                   <Plus size={18} />
                 </button>
               </div>
-              <button className="add-to-cart-btn">
-                <ShoppingCart size={20} />
-                <span>Savatga qo'shish</span>
+              <button className="view-marketplace-btn">
+                <ExternalLink size={20} />
+                <span>Uzumda ko'rish</span>
               </button>
             </div>
           </div>
@@ -402,13 +395,10 @@ const ProductDetailPage = () => {
                       </span>
                     )}
                     <span className="similar-product-price">{formatPrice(product.price)} so'm</span>
-                    {product.rating && (
-                      <div className="similar-product-rating">
-                        <Star size={14} fill="#f59e0b" color="#f59e0b" />
-                        <span className="rating-value">{product.rating}</span>
-                        {product.reviewCount && (
-                          <span className="rating-count">({product.reviewCount} sharhlar)</span>
-                        )}
+                    {product.viewCount && (
+                      <div className="similar-product-views">
+                        <Eye size={14} color="#6b7280" />
+                        <span className="view-count">{product.viewCount} ko'rilgan</span>
                       </div>
                     )}
                   </div>

@@ -139,21 +139,15 @@
   margin-bottom: 8px;
 }
 
-.product-rating {
+.product-views {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 
-.rating-value {
-  font-size: 13px;
-  font-weight: 600;
-  color: #111827;
-}
-
-.review-count {
+.view-count {
   font-size: 12px;
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 /* Compact variant for smaller cards */

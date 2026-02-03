@@ -1,9 +1,33 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import SocialAuth from '../components/SocialAuth';
 import { ArrowLeft } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import './Auth.css';
 
 const LoginPage = () => {
+    const navigate = useNavigate();
+    const { login } = useAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+        setIsLoading(true);
+
+        try {
+            await login(email, password);
+            navigate('/');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Kirish muvaffaqiyatsiz bo\'ldi');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="auth-page">
             <Link to="/" className="back-to-home">
@@ -14,7 +38,9 @@ const LoginPage = () => {
                 <h1 className="auth-title">Xush kelibsiz!</h1>
                 <p className="auth-subtitle">Hisobingizga kirish uchun ma'lumotlaringizni kiriting</p>
 
-                <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+                {error && <div className="auth-error">{error}</div>}
+
+                <form className="auth-form" onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label className="form-label" htmlFor="email">Email</label>
                         <input
@@ -22,7 +48,10 @@ const LoginPage = () => {
                             id="email"
                             className="form-input"
                             placeholder="example@mail.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
+                            disabled={isLoading}
                         />
                     </div>
 
@@ -33,7 +62,10 @@ const LoginPage = () => {
                             id="password"
                             className="form-input"
                             placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             required
+                            disabled={isLoading}
                         />
                     </div>
 
@@ -45,7 +77,9 @@ const LoginPage = () => {
                         <Link to="/forgot-password" className="form-link">Parolni unutdingizmi?</Link>
                     </div>
 
-                    <button type="submit" className="auth-submit-btn">Kirish</button>
+                    <button type="submit" className="auth-submit-btn" disabled={isLoading}>
+                        {isLoading ? 'Kirish...' : 'Kirish'}
+                    </button>
                 </form>
 
                 <div className="auth-divider">Yoki</div>

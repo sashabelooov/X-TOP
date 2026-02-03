@@ -18,7 +18,10 @@ import {
   Dumbbell,
   Baby,
   Sparkles,
+  LogOut,
+  ChevronDown,
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import './Navigation.css';
 
 interface Category {
@@ -43,19 +46,30 @@ const categories: Category[] = [
 ];
 
 const Navigation = () => {
+  const { user, isAuthenticated, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
       }
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    setIsUserMenuOpen(false);
+  };
 
   return (
     <nav className="navigation">
@@ -111,10 +125,37 @@ const Navigation = () => {
           <button className="nav-action-btn">
             <ShoppingCart size={24} />
           </button>
-          <Link to="/login" className="nav-action-btn login-btn">
-            <User size={20} />
-            <span>Kirish</span>
-          </Link>
+
+          {isAuthenticated && user ? (
+            <div className="user-menu-wrapper" ref={userMenuRef}>
+              <button
+                className="nav-action-btn user-btn"
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+              >
+                <User size={20} />
+                <span className="user-email">{user.email}</span>
+                <ChevronDown size={16} className={`chevron ${isUserMenuOpen ? 'open' : ''}`} />
+              </button>
+              {isUserMenuOpen && (
+                <div className="user-dropdown">
+                  <div className="user-dropdown-header">
+                    <span className="user-name">{user.full_name || 'Foydalanuvchi'}</span>
+                    <span className="user-email-small">{user.email}</span>
+                  </div>
+                  <div className="user-dropdown-divider" />
+                  <button className="user-dropdown-item logout" onClick={handleLogout}>
+                    <LogOut size={18} />
+                    <span>Chiqish</span>
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link to="/login" className="nav-action-btn login-btn">
+              <User size={20} />
+              <span>Kirish</span>
+            </Link>
+          )}
         </div>
       </div>
     </nav>

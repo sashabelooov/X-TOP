@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Heart, Clock, Star } from 'lucide-react';
+import { Heart, Clock, Eye } from 'lucide-react';
 import './ProductCard.css';
 
 export interface ProductCardProps {
@@ -14,6 +14,7 @@ export interface ProductCardProps {
   storeIcon?: string;
   rating?: number;
   reviewCount?: number;
+  viewCount?: number;
   timerHours?: number;
   variant?: 'default' | 'compact';
 }
@@ -26,8 +27,7 @@ const ProductCard = ({
   image,
   discount,
   storeName,
-  rating,
-  reviewCount,
+  viewCount,
   timerHours,
   variant = 'default',
 }: ProductCardProps) => {
@@ -68,11 +68,10 @@ const ProductCard = ({
           <span className="product-original-price">{formatPrice(originalPrice)}</span>
         )}
         <span className="product-price">{formatPrice(price)}</span>
-        {rating && (
-          <div className="product-rating">
-            <Star size={14} fill="#f59e0b" color="#f59e0b" />
-            <span className="rating-value">{rating}</span>
-            {reviewCount && <span className="review-count">({reviewCount} sharhlar)</span>}
+        {viewCount && (
+          <div className="product-views">
+            <Eye size={14} color="#6b7280" />
+            <span className="view-count">{viewCount} ko'rilgan</span>
           </div>
         )}
       </div>

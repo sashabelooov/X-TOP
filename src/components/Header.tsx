@@ -1,5 +1,4 @@
 import { Clock, Phone } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import './Header.css';
 
 const Header = () => {
@@ -7,10 +6,10 @@ const Header = () => {
     <header className="header">
       <div className="header-container">
         <nav className="header-nav">
-          <Link to="/about" className="header-link">Biz haqimizda</Link>
-          <a href="#" className="header-link">Yetkazib berish</a>
-          <Link to="/payment" className="header-link">To'lovlar tizimi</Link>
-          <a href="#" className="header-link">Bonuslar</a>
+          <span className="header-link inactive">Biz haqimizda</span>
+          <span className="header-link inactive">Yetkazib berish</span>
+          <span className="header-link inactive">To'lovlar tizimi</span>
+          <span className="header-link inactive">Bonuslar</span>
         </nav>
         <div className="header-info">
           <div className="header-time">

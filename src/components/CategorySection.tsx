@@ -41,33 +41,33 @@ const CategorySection = ({ title, categories }: CategorySectionProps) => {
       <div className="category-section-container">
         <div className="section-header">
           <h2 className="section-title">{title}</h2>
-          <div className="section-nav">
-            <button className="nav-arrow" onClick={() => scroll('left')}>
-              <ChevronLeft size={20} />
-            </button>
-            <button className="nav-arrow" onClick={() => scroll('right')}>
-              <ChevronRight size={20} />
-            </button>
-          </div>
         </div>
-        <div className="categories-scroll" ref={scrollRef}>
-          <div className="categories-row">
-            {categories.map((category) => (
-              <Link
-                to={`/category/${category.slug || generateSlug(category.name)}`}
-                key={category.id}
-                className="category-card"
-              >
-                <div className="category-image-wrapper">
-                  <span className="category-count">{category.count}</span>
-                  <div className="category-image-circle">
-                    <img src={category.image} alt={category.name} />
+        <div className="categories-scroll-wrapper">
+          <button className="nav-arrow nav-arrow-left" onClick={() => scroll('left')}>
+            <ChevronLeft size={20} />
+          </button>
+          <div className="categories-scroll" ref={scrollRef}>
+            <div className="categories-row">
+              {categories.map((category) => (
+                <Link
+                  to={`/category/${category.slug || generateSlug(category.name)}`}
+                  key={category.id}
+                  className="category-card"
+                >
+                  <div className="category-image-wrapper">
+                    <span className="category-count">{category.count}</span>
+                    <div className="category-image-circle">
+                      <img src={category.image} alt={category.name} />
+                    </div>
                   </div>
-                </div>
-                <span className="category-name">{category.name}</span>
-              </Link>
-            ))}
+                  <span className="category-name">{category.name}</span>
+                </Link>
+              ))}
+            </div>
           </div>
+          <button className="nav-arrow nav-arrow-right" onClick={() => scroll('right')}>
+            <ChevronRight size={20} />
+          </button>
         </div>
       </div>
     </section>

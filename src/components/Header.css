@@ -29,6 +29,16 @@
   color: #7c3aed;
 }
 
+.header-link.inactive {
+  color: #9ca3af;
+  cursor: default;
+  pointer-events: none;
+}
+
+.header-link.inactive:hover {
+  color: #9ca3af;
+}
+
 .header-info {
   display: flex;
   align-items: center;

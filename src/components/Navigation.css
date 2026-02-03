@@ -202,6 +202,107 @@
   gap: 6px;
   font-size: 14px;
   font-weight: 500;
+  text-decoration: none;
+}
+
+/* User Menu */
+.user-menu-wrapper {
+  position: relative;
+}
+
+.user-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #f3f4f6;
+  transition: background-color 0.2s;
+}
+
+.user-btn:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.user-email {
+  font-size: 14px;
+  font-weight: 500;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  transition: transform 0.2s;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  min-width: 220px;
+  z-index: 1000;
+  animation: dropdownFadeIn 0.2s ease;
+  overflow: hidden;
+}
+
+.user-dropdown-header {
+  padding: 16px;
+  background-color: #f9fafb;
+}
+
+.user-name {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.user-email-small {
+  display: block;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.user-dropdown-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+}
+
+.user-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: #374151;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.user-dropdown-item:hover {
+  background-color: #f3f4f6;
+}
+
+.user-dropdown-item.logout {
+  color: #dc2626;
+}
+
+.user-dropdown-item.logout:hover {
+  background-color: #fef2f2;
 }
 
 @media (max-width: 768px) {
@@ -224,7 +325,19 @@
 
   .nav-action-btn span {
     display: none;
-    /* Hide text on mobile */
+  }
+
+  .user-btn {
+    padding: 8px;
+  }
+
+  .user-email,
+  .chevron {
+    display: none;
+  }
+
+  .user-dropdown {
+    right: -10px;
   }
 
   .search-container {

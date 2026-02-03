@@ -15,8 +15,7 @@ const hotDealsProducts = [
     image: 'https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -27,8 +26,7 @@ const hotDealsProducts = [
     image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Apple Optom uz',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -39,8 +37,7 @@ const hotDealsProducts = [
     image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -51,8 +48,7 @@ const hotDealsProducts = [
     image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -63,8 +59,7 @@ const hotDealsProducts = [
     image: 'https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -75,8 +70,7 @@ const hotDealsProducts = [
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
 ];
@@ -131,8 +125,7 @@ const newArrivals = [
     image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -143,8 +136,7 @@ const newArrivals = [
     image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -155,8 +147,7 @@ const newArrivals = [
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -167,8 +158,7 @@ const newArrivals = [
     image: 'https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -179,8 +169,7 @@ const newArrivals = [
     image: 'https://images.unsplash.com/photo-1592840496694-26d035b52b48?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
   {
@@ -191,8 +180,7 @@ const newArrivals = [
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=400&h=400&fit=crop',
     discount: 40,
     storeName: 'Brand Store',
-    rating: 4.7,
-    reviewCount: 1448,
+    viewCount: 1448,
     timerHours: 72,
   },
 ];
