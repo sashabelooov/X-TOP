@@ -20,6 +20,7 @@ import {
   Sparkles,
   LogOut,
   ChevronDown,
+  X,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './Navigation.css';
@@ -49,6 +50,7 @@ const Navigation = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
@@ -69,6 +71,10 @@ const Navigation = () => {
   const handleLogout = () => {
     logout();
     setIsUserMenuOpen(false);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
   };
 
   return (
@@ -112,7 +118,14 @@ const Navigation = () => {
             type="text"
             placeholder="Izlash uchun mahsulot nomini kiriting"
             className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
+          {searchQuery && (
+            <button className="clear-btn" onClick={clearSearch}>
+              <X size={18} />
+            </button>
+          )}
           <button className="search-btn">
             <Search size={20} />
           </button>
