@@ -272,12 +272,12 @@
   flex-shrink: 0;
 }
 
-.filter-checkbox input:checked + .checkbox-custom {
+.filter-checkbox input:checked+.checkbox-custom {
   background-color: #10b981;
   border-color: #10b981;
 }
 
-.filter-checkbox input:checked + .checkbox-custom::after {
+.filter-checkbox input:checked+.checkbox-custom::after {
   content: '✓';
   color: #ffffff;
   font-size: 12px;
@@ -325,11 +325,11 @@
   flex-shrink: 0;
 }
 
-.filter-radio input:checked + .radio-custom {
+.filter-radio input:checked+.radio-custom {
   border-color: #10b981;
 }
 
-.filter-radio input:checked + .radio-custom::after {
+.filter-radio input:checked+.radio-custom::after {
   content: '';
   width: 10px;
   height: 10px;
@@ -838,15 +838,22 @@
 }
 
 .brand-store-content {
-  display: grid;
-  grid-template-columns: 1fr 350px;
-  gap: 32px;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 24px;
+  align-items: stretch;
+  justify-content: space-between;
 }
 
 .brand-store-grid {
+  flex: 1 1 auto !important;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, auto);
   gap: 20px;
+  min-width: 0;
+  max-width: calc(100% - 400px);
 }
 
 .brand-product-card {
@@ -899,6 +906,11 @@
 
 /* Brand Store Promo */
 .brand-store-promo {
+  width: 380px !important;
+  min-width: 380px;
+  max-width: 380px;
+  flex: 0 0 380px !important;
+  flex-shrink: 0 !important;
   background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
   border-radius: 16px;
   padding: 24px;
@@ -966,9 +978,9 @@
 
 .promo-phone-image {
   position: absolute;
-  bottom: -20px;
-  right: -20px;
-  width: 180px;
+  bottom: 0;
+  right: 0;
+  width: 160px;
   opacity: 0.9;
 }
 
@@ -995,19 +1007,24 @@
   }
 
   .brand-store-content {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 
   .brand-store-grid {
+    max-width: 100%;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
   }
 
   .brand-store-promo {
+    width: 100%;
+    min-width: 100%;
+    flex: 0 0 auto;
     min-height: 300px;
   }
 
   .promo-phone-image {
-    width: 200px;
+    width: 180px;
     bottom: 0;
     right: 20px;
   }
@@ -1148,11 +1165,15 @@
   }
 
   .brand-store-grid {
+    max-width: 100%;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 
   .brand-store-promo {
+    width: 100%;
+    min-width: 100%;
+    flex: 0 0 auto;
     min-height: 350px;
   }
 
@@ -1161,9 +1182,9 @@
   }
 
   .promo-phone-image {
-    width: 150px;
+    width: 140px;
     right: 10px;
-    bottom: 10px;
+    bottom: 0;
   }
 }
 
@@ -1239,12 +1260,20 @@
     font-size: 13px;
   }
 
+  .brand-store-promo {
+    width: 100%;
+    min-width: 100%;
+    flex: 0 0 auto;
+  }
+
   .promo-title {
     font-size: 20px;
   }
 
   .promo-phone-image {
-    width: 120px;
+    width: 100px;
+    right: 5px;
+    bottom: 0;
     opacity: 0.7;
   }
 }
