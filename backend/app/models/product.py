@@ -32,6 +32,9 @@ class Product(TimestampMixin, Base):
     favorites = relationship("ProductFavorite", back_populates="product", cascade="all, delete-orphan")
     external_clicks = relationship("ExternalLinkClick", back_populates="product", cascade="all, delete-orphan")
 
+    def __str__(self):
+        return self.name
+
 
 class ProductImage(TimestampMixin, Base):
     __tablename__ = "product_images"

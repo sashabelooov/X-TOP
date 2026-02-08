@@ -20,3 +20,6 @@ class Category(TimestampMixin, Base):
 
     # Products in this category
     products = relationship("Product", back_populates="category")
+
+    def __str__(self):
+        return self.name

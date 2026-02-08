@@ -16,3 +16,6 @@ class Market(TimestampMixin, Base):
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
     products = relationship("Product", back_populates="market")
+
+    def __str__(self):
+        return self.name
